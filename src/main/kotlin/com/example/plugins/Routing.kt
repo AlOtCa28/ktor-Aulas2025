@@ -1,5 +1,6 @@
 package com.example.com.example
 
+import Rutas.rutasAulas
 import Rutas.rutasUsuario
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -13,6 +14,9 @@ fun Application.configureRouting() {
         }
         route("/usuarios") {
             rutasUsuario()
+        }
+        route("/aulas") {
+            rutasAulas()
         }
     }
 }
