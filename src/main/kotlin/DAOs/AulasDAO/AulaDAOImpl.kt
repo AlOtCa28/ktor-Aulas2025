@@ -62,7 +62,7 @@ class AulaDAOImpl : AulaDAO {
             val statement = it.prepareStatement(sql)
             statement.setString(1, aula.nombre)
             statement.setInt(2, aula.idEncargado ?: 0) // Asignar 0 si idEncargado es null
-            statement.setInt(3, aula.id)
+            aula.id?.let { it1 -> statement.setInt(3, it1) }
             return statement.executeUpdate() > 0
         }
         return false

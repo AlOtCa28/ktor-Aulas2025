@@ -6,8 +6,10 @@ import DAOs.UsuarioDAO.UsuarioDAO
 import DAOs.UsuarioDAO.UsuarioDAOImpl
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import modelo.Aula
 
 val aulasDAO: AulaDAO = AulaDAOImpl()
 
@@ -33,6 +35,17 @@ fun Route.rutasAulas() {
                 }
             } else {
                 return@get call.respond(HttpStatusCode.BadRequest, "ID inválido")
+            }
+        }
+
+        //registrar aula
+        post("/registrar") {
+            val aula = call.receive<Aula>()
+            val registrado = aulasDAO.registrarAula(aula)
+            if (registrado) {
+                call.respond(HttpStatusCode.Created, true)
+            } else {
+                call.respond(HttpStatusCode.BadRequest, false)
             }
         }
     }

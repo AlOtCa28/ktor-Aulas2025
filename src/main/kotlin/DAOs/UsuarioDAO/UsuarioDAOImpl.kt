@@ -72,7 +72,7 @@ class UsuarioDAOImpl : UsuarioDAO {
             statement.setString(2, usuario.email)
             statement.setString(3, usuario.passwordHash)
             statement.setInt(4, usuario.rol)
-            statement.setInt(5, usuario.id)
+            usuario.id?.let { it1 -> statement.setInt(5, it1) }
 
             return statement.executeUpdate() > 0
         }
