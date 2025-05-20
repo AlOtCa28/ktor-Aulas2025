@@ -34,4 +34,15 @@ fun Route.rutasUsuario() {
             call.respond(HttpStatusCode.OK, usuario)
         }
     }
+
+    route("/registrar") {
+        post {
+            val usuario = call.receive<Usuario>()
+            if (usuarioDAO.registrarUsuario(usuario)) {
+                call.respond(HttpStatusCode.Created, "Usuario registrado con éxito")
+            } else {
+                call.respond(HttpStatusCode.BadRequest, "Error al registrar el usuario")
+            }
+        }
+    }
 }
