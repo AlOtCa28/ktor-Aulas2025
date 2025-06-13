@@ -65,6 +65,7 @@ fun Route.rutasAulas() {
         }
 
 
+
         // Eliminar aula
 
         delete("/eliminar/{id}") {

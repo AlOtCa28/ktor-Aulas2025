@@ -119,4 +119,21 @@ class DispositivoDAOImpl : DispositivoDAO {
         }
         return false
     }
+
+    override suspend fun obtenerDispositivoPorAulaId(idAula: Int): List<Dispositivo> {
+        val dispositivos = mutableListOf<Dispositivo>()
+        val sql = "SELECT * FROM dispositivos WHERE aula_id = ?"
+        val connection = Database.getConnection()
+        connection?.use {
+            val statement = it.prepareStatement(sql)
+            statement.setInt(1, idAula)
+            val result = statement.executeQuery()
+            while (result.next()) {
+                mapToDispositivo(result)?.let { dispositivo ->
+                    dispositivos.add(dispositivo)
+                }
+            }
+        }
+        return dispositivos
+    }
 }

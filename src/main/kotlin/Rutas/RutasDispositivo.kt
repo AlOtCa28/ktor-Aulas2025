@@ -2,12 +2,21 @@ package Rutas
 
 import DAOs.DispositivoDAO.DispositivoDAO
 import DAOs.DispositivoDAO.DispositivoDAOImpl
+import DAOs.Mensajes.MensajeDAO
+import DAOs.Mensajes.MensajeDAOImpl
+import DAOs.Mensajes.MensajeUsuarioDAO
+import DAOs.Mensajes.MensajeUsuarioDAOImpl
+import DAOs.UsuarioDAO.UsuarioDAO
+import DAOs.UsuarioDAO.UsuarioDAOImpl
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import modelo.Dispositivo
+import modelo.Mensaje
+import modelo.MensajeUsuario
+import java.time.LocalDateTime
 
 val dispositivoDAO: DispositivoDAO = DispositivoDAOImpl()
 
@@ -33,6 +42,22 @@ fun Route.rutasDispositivo() {
             call.respond(HttpStatusCode.OK, dispositivo)
         } else {
             call.respond(HttpStatusCode.NotFound, "Dispositivo no encontrado")
+        }
+    }
+
+
+    // oBTENER DISPOSITIVO POR AULA
+    get("/porAula/{aulaId}") {
+        val aulaId = call.parameters["aulaId"]?.toIntOrNull()
+        if (aulaId == null) {
+            call.respond(HttpStatusCode.BadRequest, "ID de aula inválido")
+            return@get
+        }
+        val dispositivos = dispositivoDAO.obtenerDispositivoPorAulaId(aulaId)
+        if (dispositivos.isNotEmpty()) {
+            call.respond(HttpStatusCode.OK, dispositivos)
+        } else {
+            call.respond(HttpStatusCode.NotFound, "No hay dispositivos registrados en esta aula")
         }
     }
 

@@ -8,4 +8,6 @@ interface DispositivoDAO {
     suspend fun registrarDispositivo(dispositivo: Dispositivo): Boolean
     suspend fun actualizarDispositivo(dispositivo: Dispositivo): Boolean
     suspend fun eliminarDispositivo(id: Int): Boolean
+
+    suspend fun obtenerDispositivoPorAulaId(idAula: Int): List<Dispositivo>
 }

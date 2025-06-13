@@ -32,5 +32,12 @@ fun Application.configureRouting() {
         route("/especificacion-pc") {
             rutasEspecificacionPc()
         }
+
+        route("/mensajes") {
+            rutasMensaje()
+        }
+        route("/mensajes-usuarios") {
+            rutasMensajeUsuario()
+        }
     }
 }
