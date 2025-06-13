@@ -1,7 +1,6 @@
 package com.example.com.example
 
-import Rutas.rutasAulas
-import Rutas.rutasUsuario
+import Rutas.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -17,6 +16,21 @@ fun Application.configureRouting() {
         }
         route("/aulas") {
             rutasAulas()
+        }
+        route("/dispositivos") {
+            rutasDispositivo()
+        }
+
+        route("/especificacion-impresora") {
+            rutasEspecificacionImpresora()
+        }
+
+        route("/especificacion-monitor") {
+            rutasEspecificacionMonitor()
+        }
+
+        route("/especificacion-pc") {
+            rutasEspecificacionPc()
         }
     }
 }

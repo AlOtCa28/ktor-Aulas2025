@@ -48,5 +48,37 @@ fun Route.rutasAulas() {
                 call.respond(HttpStatusCode.BadRequest, false)
             }
         }
+
+        // Actualizar aula
+
+        put("/actualizar") {
+            val aula = call.receive<Aula>()
+            if (aula.id == null) {
+                return@put call.respond(HttpStatusCode.BadRequest, "El ID es obligatorio para actualizar")
+            }
+            val actualizado = aulasDAO.actualizarAula(aula)
+            if (actualizado) {
+                call.respond(HttpStatusCode.OK, true)
+            } else {
+                call.respond(HttpStatusCode.NotFound, "Aula no encontrada para actualizar")
+            }
+        }
+
+
+        // Eliminar aula
+
+        delete("/eliminar/{id}") {
+            val id = call.parameters["id"]?.toIntOrNull()
+            if (id != null) {
+                val eliminado = aulasDAO.eliminarAula(id)
+                if (eliminado) {
+                    call.respond(HttpStatusCode.OK, true)
+                } else {
+                    call.respond(HttpStatusCode.NotFound, "Aula no encontrada para eliminar")
+                }
+            } else {
+                call.respond(HttpStatusCode.BadRequest, "ID inválido")
+            }
+        }
     }
 }

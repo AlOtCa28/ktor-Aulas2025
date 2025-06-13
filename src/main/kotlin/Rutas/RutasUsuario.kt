@@ -45,4 +45,34 @@ fun Route.rutasUsuario() {
         }
     }
 
+
+    put("/actualizar") {
+        val usuario = call.receive<Usuario>()
+        if (usuario.id == null) {
+            call.respond(HttpStatusCode.BadRequest, "El ID es obligatorio para actualizar")
+            return@put
+        }
+        val actualizado = usuarioDAO.actualizarUsuario(usuario)
+        if (actualizado) {
+            call.respond(HttpStatusCode.OK, true)
+        } else {
+            call.respond(HttpStatusCode.NotFound, "Usuario no encontrado para actualizar")
+        }
+    }
+
+
+    delete("/borrar/{id}") {
+        val id = call.parameters["id"]?.toIntOrNull()
+        if (id == null) {
+            call.respond(HttpStatusCode.BadRequest, "ID inválido")
+            return@delete
+        }
+
+        val eliminado = usuarioDAO.eliminarUsuario(id)
+        if (eliminado) {
+            call.respond(HttpStatusCode.OK, true)
+        } else {
+            call.respond(HttpStatusCode.NotFound, "Usuario no encontrado")
+        }
+    }
 }

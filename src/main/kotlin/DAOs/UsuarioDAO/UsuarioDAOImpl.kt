@@ -28,7 +28,7 @@ class UsuarioDAOImpl : UsuarioDAO {
     }
 
     override fun obtenerUsuarioPorId(id: Int): Usuario? {
-        val sql = "SELECT * FROM usuarios WHERE id_usuario = ?"
+        val sql = "SELECT * FROM usuarios WHERE id = ?"
         val connection = Database.getConnection()
         connection?.use {
             val statement = it.prepareStatement(sql)
@@ -64,7 +64,7 @@ class UsuarioDAOImpl : UsuarioDAO {
     }
 
     override fun actualizarUsuario(usuario: Usuario): Boolean {
-        val sql = "UPDATE usuarios SET nombre = ?, email = ?, password_hash = ?, rol = ? WHERE id_usuario = ?"
+        val sql = "UPDATE usuarios SET nombre = ?, email = ?, password_hash = ?, rol = ? WHERE id = ?"
         val connection = Database.getConnection()
         connection?.use {
             val statement = it.prepareStatement(sql)
@@ -80,7 +80,7 @@ class UsuarioDAOImpl : UsuarioDAO {
     }
 
     override fun eliminarUsuario(id: Int): Boolean {
-        val sql = "DELETE FROM usuarios WHERE id_usuario = ?"
+        val sql = "DELETE FROM usuarios WHERE id = ?"
         val connection = Database.getConnection()
         connection?.use {
             val statement = it.prepareStatement(sql)
